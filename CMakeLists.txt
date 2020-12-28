@@ -14,7 +14,8 @@ set(HEADERS
   ./Include/bme/BME280RawData.h
   )
 
-add_definitions(-lwiringPi)
+# add_definitions(-L/home/WiringPi/wiringPi -lwiringPi)
+find_library(wiringPi_LIB wiringPi)
 
 add_library(${LIB_TARGET} ${SOURCES} ${HEADERS})
 
@@ -23,3 +24,7 @@ target_include_directories(${LIB_TARGET}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Include/bme)
 
 target_compile_definitions(${LIB_TARGET} PUBLIC TMS320C66X)
+
+target_link_libraries(${LIB_TARGET}
+  ${wiringPi_LIB}
+  )
