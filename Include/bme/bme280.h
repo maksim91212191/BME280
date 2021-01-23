@@ -1,3 +1,6 @@
+#ifndef BME280_H
+#define BME280_H
+
 #include <stdint.h>
 #include "BME280CalibrationData.h"
 #include "BME280RawData.h"
@@ -119,67 +122,71 @@
 #define BME280_REGISTER_HUMIDDATA_MSB       0xFD
 #define BME280_REGISTER_HUMIDDATA_LSB       0xFE
 
-class BME280 {
-private:
-  char * device;
-  int devId;
-  int fd;
-  uint8_t chipId;
-  BME280CalibrationData * bmp280CalibrationData;
-  BME280RawData * bmp280RawData;
+namespace BME {   /*BME*/
 
-  void write8(uint8_t, uint8_t);
-  int read8(uint8_t);
-  uint8_t readU8(uint8_t);
-  int8_t readS8(uint8_t);
-  int read16(uint8_t);
-  int16_t readS16(uint8_t);
-  uint16_t readU16(uint8_t);
+    class BME280 {
+    private:
+        char * device;
+        int devId;
+        int fd;
+        uint8_t chipId;
+        BME280CalibrationData * bmp280CalibrationData;
+        BME280RawData * bmp280RawData;
 
-  int32_t getTemperatureC(int32_t adc_T);
-  double getAltitude(double pressure);
-  double compensateTemperature(int32_t t_fine);
-  double compensatePressure(int32_t adc_P, int32_t t_fine);
-  double compensateHumidity(int32_t adc_H, int32_t t_fine);
-  BME280CalibrationData * getCalibrationData();
-  BME280RawData * getRawData();
+        void write8(uint8_t, uint8_t);
+        int read8(uint8_t);
+        uint8_t readU8(uint8_t);
+        int8_t readS8(uint8_t);
+        int read16(uint8_t);
+        int16_t readS16(uint8_t);
+        uint16_t readU16(uint8_t);
 
-public:
-  BME280(const char*, int);
-  BME280(int);
-  virtual ~BME280();
+        int32_t getTemperatureC(int32_t adc_T);
+        double getAltitude(double pressure);
+        double compensateTemperature(int32_t t_fine);
+        double compensatePressure(int32_t adc_P, int32_t t_fine);
+        double compensateHumidity(int32_t adc_H, int32_t t_fine);
+        BME280CalibrationData * getCalibrationData();
+        BME280RawData * getRawData();
 
-  BME280CalibrationData * getBmp280CalibrationData();
-  BMP280Data * getBMP280Data();
+    public:
+        BME280(const char*, int);
+        BME280(int);
+        virtual ~BME280();
 
-  int init();
-  void reset();
-  void spi3wEnable();
-  void spi3wDisable();
-  void setPowerMode(uint8_t);
-  void setTemperatureOversampling(uint8_t);
-  void setPressureOversampling(uint8_t);
-  void setHumidityOversampling(uint8_t);
-  void setStandbyTime(uint8_t);
-  void setIrrFilter(uint8_t);
-  uint8_t getPowerMode();
-  uint8_t getPressureOversampling();
-  uint8_t getHumidityOversampling();
-  uint8_t getTemperatureOversampling();
-  uint8_t getIrrFilter();
-  uint8_t getStandbyTime();
-  uint8_t getSpi3w();
-  uint8_t getMeasuringStatus();
-  uint8_t getImUpdateStatus();
-  uint8_t getConfig();
-  uint8_t getStatus();
-  uint8_t getControl();
-  uint8_t getControlHumidity();
-  uint8_t getChipId();
-  uint8_t getChipVersion();
-  void setReset(uint8_t);
-  void setConfig(uint8_t);
-  void setStatus(uint8_t);
-  void setControl(uint8_t);
-  void setControlHumidity(uint8_t);
-};
+        BME280CalibrationData * getBmp280CalibrationData();
+        BMP280Data * getBMP280Data();
+
+        int init();
+        void reset();
+        void spi3wEnable();
+        void spi3wDisable();
+        void setPowerMode(uint8_t);
+        void setTemperatureOversampling(uint8_t);
+        void setPressureOversampling(uint8_t);
+        void setHumidityOversampling(uint8_t);
+        void setStandbyTime(uint8_t);
+        void setIrrFilter(uint8_t);
+        uint8_t getPowerMode();
+        uint8_t getPressureOversampling();
+        uint8_t getHumidityOversampling();
+        uint8_t getTemperatureOversampling();
+        uint8_t getIrrFilter();
+        uint8_t getStandbyTime();
+        uint8_t getSpi3w();
+        uint8_t getMeasuringStatus();
+        uint8_t getImUpdateStatus();
+        uint8_t getConfig();
+        uint8_t getStatus();
+        uint8_t getControl();
+        uint8_t getControlHumidity();
+        uint8_t getChipId();
+        uint8_t getChipVersion();
+        void setReset(uint8_t);
+        void setConfig(uint8_t);
+        void setStatus(uint8_t);
+        void setControl(uint8_t);
+        void setControlHumidity(uint8_t);
+    };
+}  /*BME*/
+#endif
